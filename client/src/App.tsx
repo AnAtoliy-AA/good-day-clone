@@ -5,6 +5,7 @@ import './App.css';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
+import TestForm from './components/TestForm/TestForm'
 
 // function App() {
 //   return (
@@ -14,8 +15,8 @@ import Register from './components/Register/Register';
 // }
 
 
-@inject("mainStore")
-@observer
+// @inject("mainStore")
+// @observer
 export default class App extends React.Component {
     // constructor(props) {
     //     super(props);       
@@ -36,7 +37,7 @@ export default class App extends React.Component {
         path='/register'
         component={Register}
       />
-
+<TestForm />
     </BrowserRouter>           
             </div>            
         );

@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button, Input } from '@material-ui/core'
 import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
 import { useForm } from 'react-hook-form'
 import React from 'react'
@@ -42,6 +42,8 @@ export const LoginForm = () => {
           {errors.email && errors.email.type === 'required' && (
             <div className="error">Your must enter your text.</div>
           )}
+
+          <Input />
 
         </div>
         <div className="field">
