@@ -6,6 +6,7 @@ import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import TestForm from './components/TestForm/TestForm'
+import MainScreen from './components/MainScreen/MainScreen';
 
 const App = observer(() => {
     return (
@@ -20,7 +21,11 @@ const App = observer(() => {
                     path='/register'
                     component={Register}
                 />
-                <TestForm />
+                <Route
+                    path='/'
+                    component={MainScreen}
+                />
+                {/* <TestForm /> */}
             </BrowserRouter>
         </div>
     );
