@@ -1,12 +1,19 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react'
+import { useStore } from '../../hooks/hooks';
 import './Login.scss'
 import LoginForm from './LoginForm/LoginForm';
 
 
-const Login: React.FC = () => (
-  <div className="Login">
-    <LoginForm />
-  </div>
-);
+const Login = observer(() => {
+  const authStore = useStore('authStore')
+  return (
+    <div className="Login">
+      {!authStore.isAuth && <LoginForm />}
+      
+    YOUR TOKEN IS {authStore.token}    
+    </div>
+  )
+});
 
 export default Login

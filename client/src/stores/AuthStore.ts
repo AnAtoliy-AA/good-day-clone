@@ -5,14 +5,15 @@ export class AuthStore {
     token: string = ''
 
     @observable
-    someName: string = ''
+    isAuth: boolean = false
 
     @action
     setToken(token:string) {
         this.token = token
     }
    
-
+    @action
+    setIsAuth(isAuth: boolean) {
+        this.isAuth = isAuth
+    }
 }
-
-// export default new AuthStore();

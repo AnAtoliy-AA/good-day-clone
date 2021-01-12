@@ -1,16 +1,16 @@
 import React from 'react';
-import './LoginForm.scss';
+import axios from 'axios'
+import { useForm } from 'react-hook-form'
+import { observer } from 'mobx-react-lite';
 import { Button } from '@material-ui/core'
 import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
-import { useForm } from 'react-hook-form'
-import axios from 'axios'
+
+import './LoginForm.scss';
 import { User } from '../../../shared/interfaces';
-import { observer } from 'mobx-react-lite';
 import { useStore } from "../../../hooks/hooks";
 
-
 const LoginForm = observer(() => {
-const authStore = useStore('authStore')
+  const authStore = useStore('authStore')
 
   const { register, handleSubmit, errors } = useForm<User>();
   const onSubmit = (data: User) => {
@@ -20,12 +20,11 @@ const authStore = useStore('authStore')
     })
       .then((response) => {
         authStore.setToken(response.data.token);
-        console.log(authStore);
+        authStore.setIsAuth(true);
       })
   };
   return (
     <div>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="field">
           <label htmlFor="email">
@@ -64,7 +63,6 @@ const authStore = useStore('authStore')
           Login
         </Button>
       </form>
-     YOUR TOKEN IS {authStore.token}
     </div>
   );
 });
