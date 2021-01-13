@@ -25,7 +25,7 @@ const App = observer(() => {
                     path='/'
                     component={MainScreen}
                 />
-                {/* <TestForm /> */}
+                <TestForm />
             </BrowserRouter>
         </div>
     );

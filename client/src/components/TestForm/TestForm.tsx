@@ -9,7 +9,7 @@ const TestForm: React.FC = () => {
  
 
   const sendRequest = () => {
-    axios.get('/api/order', {
+    axios.get('/api/task', {
       headers: {
         authorization: authStore.token
       }
