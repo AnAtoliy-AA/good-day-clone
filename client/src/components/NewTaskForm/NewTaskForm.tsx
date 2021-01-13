@@ -15,7 +15,15 @@ const NewTaskForm = () => {
   const onSubmit = (data: NewTask) => {
     axios.post('api/task', {
       list: {
-        name: data.name
+        name: data.name,
+        // assigned: '',
+        // required: '',
+        // priority: '',
+        // deadline: '',
+        // status: '',
+        // estimate: '',
+        // startEnd: '',
+        // progress: 0
       }
     }, {
       headers: {

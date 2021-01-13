@@ -57,3 +57,37 @@ module.exports.create = async function(req, res) {
     errorHandler(res, e)
   }
 }
+
+
+module.exports.getById = async function(req, res) {
+  try {
+    const task = await Task.findById(req.params.id)
+    res.status(200).json(task)
+  } catch (e) {
+    errorHandler(res, e)
+  }
+}
+
+module.exports.remove = async function(req, res) {
+  try {
+    await Task.remove({_id: req.params.id})
+    res.status(200).json({
+      message: 'Task was deleted.'
+    })
+  } catch (e) {
+    errorHandler(res, e)
+  }
+}
+
+module.exports.update = async function(req, res) {
+  try {
+    const task = await Task.findOneAndUpdate(
+      {_id: req.params.id},
+      {$set: req.body},
+      {new: true}
+    )
+    res.status(200).json(task)
+  } catch (e) {
+    errorHandler(res, e)
+  }
+}

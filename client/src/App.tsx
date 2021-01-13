@@ -5,7 +5,6 @@ import './App.css';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
-import TestForm from './components/TestForm/TestForm'
 import MainScreen from './components/MainScreen/MainScreen';
 
 const App = observer(() => {
@@ -22,10 +21,9 @@ const App = observer(() => {
                     component={Register}
                 />
                 <Route
-                    path='/'
+                    path='/main'
                     component={MainScreen}
                 />
-                <TestForm />
             </BrowserRouter>
         </div>
     );

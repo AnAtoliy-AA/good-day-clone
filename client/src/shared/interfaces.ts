@@ -1,5 +1,3 @@
-import { Tracing } from "trace_events";
-
 export interface User {
   email: string
   password: string
@@ -7,16 +5,35 @@ export interface User {
 
 export interface NewTask {
   name: string
-}
-export interface Task {
-  name: string
-  asigned: string
+  assigned: string
   required: string
   priority: string
   deadline: string
   status: string
   estimate: string
-  stertEnd: string
+  startEnd: string
   progress: number
-  schedule?: Date 
+  schedule?: Date
+}
+export interface Task {
+  date: string
+  list: Array<TaskFields>
+  length: number
+  task: number
+  user: string
+  _id: string
+}
+
+export interface TaskFields {
+  _id: string
+  name: string
+  assigned: string
+  required: string
+  priority: string
+  deadline: string
+  status: string
+  estimate: string
+  startEnd: string
+  progress: number
+  schedule?: Date
 }
