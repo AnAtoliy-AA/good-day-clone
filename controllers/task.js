@@ -1,4 +1,4 @@
-const Order = require('../models/Order')
+const Task = require('../models/Tasks')
 const errorHandler = require('../utils/errorHandler')
 
 module.exports.getAll = async function(req, res) {
@@ -20,18 +20,18 @@ module.exports.getAll = async function(req, res) {
     query.date['$lte'] = req.query.end
   }
 
-  if (req.query.order) {
-    query.order = +req.query.order
+  if (req.query.task) {
+    query.task = +req.query.task
   }
 
   try {
-    const orders = await Order
+    const tasks = await Task
       .find(query)
       .sort({date: -1})
       .skip(+req.query.offset)
       .limit(+req.query.limit)
 
-    res.status(200).json(orders)
+    res.status(200).json(tasks)
 
   } catch (e) {
     errorHandler(res, e)
@@ -40,19 +40,19 @@ module.exports.getAll = async function(req, res) {
 
 module.exports.create = async function(req, res) {
   try {
-    const lastOrder = await Order
+    const lastTask = await Task
       .findOne({user: req.user.id})
       .sort({date: -1})
 
-    const maxOrder = lastOrder ? lastOrder.order : 0
+    const maxTask = lastTask ? lastTask.task : 0
 
-    const order = await new Order({
+    const task = await new Task({
       list: req.body.list,
       user: req.user.id,
-      order: maxOrder + 1
+      task: maxTask + 1
     }).save()
 
-    res.status(201).json(order)
+    res.status(201).json(task)
   } catch (e) {
     errorHandler(res, e)
   }
