@@ -10,20 +10,23 @@ import { useStore } from "../../hooks/hooks";
 
 const NewTaskForm = () => {
   const authStore = useStore('authStore')
+  const tasksStore = useStore('tasksStore')
 
   const { register, handleSubmit, errors } = useForm<NewTask>();
+  const sendRequest = async () => {
+    axios.get('/api/task', {
+      headers: {
+        authorization: authStore.token
+      }
+    })
+      .then((response) => {
+        tasksStore.setTasks(response.data)
+      })
+  }
   const onSubmit = (data: NewTask) => {
     axios.post('api/task', {
       list: {
         name: data.name,
-        // assigned: '',
-        // required: '',
-        // priority: '',
-        // deadline: '',
-        // status: '',
-        // estimate: '',
-        // startEnd: '',
-        // progress: 0
       }
     }, {
       headers: {
@@ -32,7 +35,9 @@ const NewTaskForm = () => {
 
     })
       .then((response) => {
+        sendRequest()
         console.log('TASK RESPONSE: ', response.data)
+       
       })
   };
   return (

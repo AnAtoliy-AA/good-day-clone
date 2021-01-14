@@ -12,22 +12,17 @@ const TestForm: React.FC = observer(() => {
   const tasksStore = useStore('tasksStore')
 
   const sendRequest = async () => {
-    // const tasks = await tasksAPI.getTasks()
-    // tasksStore.setTasks(tasks)
     axios.get('/api/task', {
       headers: {
         authorization: authStore.token
       }
     })
       .then((response) => {
-        console.log('getting tasks')
         tasksStore.setTasks(response.data)
       })
   }
 
   const deleteItem = async (itemId: string) => {
-  //  await tasksAPI.deleteItem(itemId)
-  //   sendRequest()
     axios.delete(`/api/task/${itemId}`, {
       headers: {
         authorization: authStore.token
@@ -53,8 +48,6 @@ const TestForm: React.FC = observer(() => {
       </Button>
         </div>
       })}
-      <button onClick={() => console.log('TaskStore_onClick: ', tasksStore.tasks)}>ShowTasks</button>
-      <button onClick={sendRequest} >Get tasks</button>
     </div>
   )
 });
