@@ -5,7 +5,6 @@ import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useStore } from '../../hooks/hooks';
 import './TestForm.scss';
-import { tasksAPI } from '../../api/api';
 
 const TestForm: React.FC = observer(() => {
   const authStore = useStore('authStore')

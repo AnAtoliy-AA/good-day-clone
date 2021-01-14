@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import { observer } from 'mobx-react-lite';
-import { Button } from '@material-ui/core'
+import { Button, TextField } from '@material-ui/core'
 import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
 
 import './LoginForm.scss';
@@ -38,34 +38,34 @@ const LoginForm = observer(() => {
       })
   };
   return (
-    <div>
+    <div>Login
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="field">
-          <label htmlFor="email">
-            <input
-              type="text"
-              id="email"
-              name="email"
-              ref={register({ required: true })}
-            />
-          </label>
+           <TextField id="name"
+            size='small'
+            name="email"
+            error={errors.email && true}
+            autoComplete='false'
+            label="Write your email here"
+            variant="outlined"
+            inputRef={register({ required: true })} />
           {errors.email && errors.email.type === 'required' && (
-            <div className="error">Your must enter your text.</div>
+            <div className="error">Your must enter email!.</div>
           )}
         </div>
         <div className="field">
-          <label htmlFor="password">
-            <input
-              type="password"
-              id="password"
-              name="password"
-              ref={register({ required: true })}
-            />
-          </label>
+           <TextField id="password"
+            size='small'
+            name="password"
+            type="password"
+            error={errors.password && true}
+            autoComplete='false'
+            label="Write your password here"
+            variant="outlined"
+            inputRef={register({ required: true })} />
           {errors.password && errors.password.type === 'required' && (
-            <div className="error">Your must enter your text.</div>
+            <div className="error">Your must enter your password.</div>
           )}
-
         </div>
         <Button
           variant="contained"

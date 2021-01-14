@@ -7,7 +7,6 @@ import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
 import './NewTaskForm.scss';
 import { NewTask } from '../../shared/interfaces';
 import { useStore } from "../../hooks/hooks";
-import PriorityList from './PriorityList/PriorityList';
 
 const NewTaskForm = () => {
   const authStore = useStore('authStore')
