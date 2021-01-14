@@ -34,6 +34,7 @@ const TestForm: React.FC = observer(() => {
 
   return (
     <div className="TestForm">
+      <div>Inbox
       {(tasksStore.tasks.length) && tasksStore.tasks.map(el => {
         return (<div key={el._id}><div>
          <h3>{el.list[0].name}</h3> 
@@ -48,6 +49,10 @@ const TestForm: React.FC = observer(() => {
       </Button>
         </div>)
       })}
+      </div>
+      <div>SOME_DATE</div>
+      <div>ANOTHER_DATE</div>
+      <div>SOME_OTHER_DATE</div>
     </div>
   )
 });
