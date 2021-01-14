@@ -35,9 +35,10 @@ const TestForm: React.FC = observer(() => {
 
   return (
     <div className="TestForm">
-      {(tasksStore.tasks[0]) && tasksStore.tasks.map(el => {
-        return <div key={el._id}>
-          {el.list[0].name}
+      {(tasksStore.tasks.length) && tasksStore.tasks.map(el => {
+        return (<div key={el._id}><div>
+          Name: {el.list[0].name}
+        </div>
           <Button
             variant="contained"
             color="secondary"
@@ -46,7 +47,7 @@ const TestForm: React.FC = observer(() => {
           >
             Delete
       </Button>
-        </div>
+        </div>)
       })}
     </div>
   )

@@ -1,1 +1,6 @@
+@import "../../constants.scss";
 .NewTaskForm {}
+
+.error {
+    color: $error-color;
+}
