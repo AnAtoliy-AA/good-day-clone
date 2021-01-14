@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
-import { Button, TextField } from '@material-ui/core'
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core'
 import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
 
 import './NewTaskForm.scss';
@@ -14,6 +14,7 @@ const NewTaskForm = () => {
   const mainScreenStore = useStore('mainScreenStore')
 
   const { register, handleSubmit, errors } = useForm<NewTask>();
+
   const sendRequest = async () => {
     axios.get('/api/task', {
       headers: {
@@ -24,10 +25,12 @@ const NewTaskForm = () => {
         tasksStore.setTasks(response.data)
       })
   }
+
   const onSubmit = (data: NewTask) => {
     axios.post('api/task', {
       list: {
         name: data.name,
+        priority: priority
       }
     }, {
       headers: {
@@ -41,6 +44,13 @@ const NewTaskForm = () => {
         mainScreenStore.toggleIsNewTaskFormOpen()
       })
   };
+
+  const [priority, setPriority] = React.useState('');
+
+  const handleChange = (event: any) => {
+    setPriority(event.target.value);
+  };
+
   return (
     <div className="NewTaskForm">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,7 +68,27 @@ const NewTaskForm = () => {
           )}
         </div>
         <div className="field">
-          PriorityList
+          <FormControl variant="filled" className="priorityForm">
+            <InputLabel id="demo-simple-select-filled-label">Priority</InputLabel>
+            <Select
+              labelId="demo-simple-select-filled-label"
+              id="demo-simple-select-filled"
+              name='priority'
+              value={priority}
+              onChange={handleChange}
+            >
+              <MenuItem value="">
+                <em>Normal</em>
+              </MenuItem>
+              <MenuItem value={'Emergency'}>Emergency</MenuItem>
+              <MenuItem value={'Blocker'}>Blocker</MenuItem>
+              <MenuItem value={'Highest'}>Highest</MenuItem>
+              <MenuItem value={'High'}>High</MenuItem>
+              <MenuItem value={'Normal'}>Normal</MenuItem>
+              <MenuItem value={'Low'}>Low</MenuItem>
+              <MenuItem value={'Lowest'}>Lowest</MenuItem>
+            </Select>
+          </FormControl>
         </div>
         <div className="field">
           Deadline

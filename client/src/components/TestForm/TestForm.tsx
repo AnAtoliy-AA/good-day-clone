@@ -36,7 +36,8 @@ const TestForm: React.FC = observer(() => {
     <div className="TestForm">
       {(tasksStore.tasks.length) && tasksStore.tasks.map(el => {
         return (<div key={el._id}><div>
-          Name: {el.list[0].name}
+         <h3>{el.list[0].name}</h3> 
+         <h5>{el.list[0].priority}</h5>
         </div>
           <Button
             variant="contained"

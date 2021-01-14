@@ -1,6 +1,12 @@
 @import "../../constants.scss";
-.NewTaskForm {}
+.NewTaskForm {
+    text-align: center;
+}
 
 .error {
     color: $error-color;
+}
+
+.priorityForm {
+    min-width: 150px;
 }
