@@ -44,7 +44,6 @@ const TestForm: React.FC = observer(() => {
             startIcon={<DeleteIcon />}
             onClick={() => { deleteItem(el._id) }}
           >
-            Delete
       </Button>
         </div>)
       })}

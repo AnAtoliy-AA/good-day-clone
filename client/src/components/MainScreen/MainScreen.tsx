@@ -1,3 +1,5 @@
+import { Button } from '@material-ui/core';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useStore } from '../../hooks/hooks';
@@ -9,9 +11,14 @@ const MainScreen: React.FC = observer(() => {
   const mainScreenStore = useStore('mainScreenStore')
   return (
     <div className="MainScreen">
-      <button onClick={() =>{mainScreenStore.toggleIsNewTaskFormOpen()}}>+</button>
-      {mainScreenStore.isNewTaskFormOpen&& <NewTaskForm />}
-      {!mainScreenStore.isNewTaskFormOpen&&  <TestForm />} 
+      <Button
+        variant="outlined"
+        color="primary"
+        startIcon={<AddCircleIcon />}
+        onClick={() => { mainScreenStore.toggleIsNewTaskFormOpen() }}
+      > New task </Button>
+      {mainScreenStore.isNewTaskFormOpen && <NewTaskForm />}
+      {!mainScreenStore.isNewTaskFormOpen && <TestForm />}
     </div>
   )
 })
