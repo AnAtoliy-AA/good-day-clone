@@ -11,6 +11,19 @@ import { useStore } from "../../../hooks/hooks";
 
 const LoginForm = observer(() => {
   const authStore = useStore('authStore')
+  const tasksStore = useStore('tasksStore')
+  
+  const sendRequest = async () => {
+    axios.get('/api/task', {
+      headers: {
+        authorization: authStore.token
+      }
+    })
+      .then((response) => {
+        tasksStore.setTasks(response.data)
+        
+      })
+  }
 
   const { register, handleSubmit, errors } = useForm<User>();
   const onSubmit = (data: User) => {
@@ -21,6 +34,7 @@ const LoginForm = observer(() => {
       .then((response) => {
         authStore.setToken(response.data.token);
         authStore.setIsAuth(true);
+        sendRequest()
       })
   };
   return (
