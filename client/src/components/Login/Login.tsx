@@ -9,9 +9,7 @@ const Login = observer(() => {
   const authStore = useStore('authStore')
   return (
     <div className="Login">
-      {!authStore.isAuth && <LoginForm />}
-      
-    YOUR TOKEN IS {authStore.token}    
+      {!authStore.isAuth ? <LoginForm /> : 'you were logged in'}
     </div>
   )
 });
