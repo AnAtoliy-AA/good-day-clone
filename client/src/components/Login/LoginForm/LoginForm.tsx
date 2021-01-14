@@ -1,34 +1,30 @@
 import React from 'react';
-import './Register.scss';
+import axios from 'axios'
+import { useForm } from 'react-hook-form'
+import { observer } from 'mobx-react-lite';
 import { Button } from '@material-ui/core'
 import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
-import { useForm } from 'react-hook-form'
-import axios from 'axios';
-import { User } from '../../shared/interfaces';
 
-const Register: React.FC = () => (
-  <div className="Register">
-    <RegisterForm />
-  </div>
-);
+import './LoginForm.scss';
+import { User } from '../../../shared/interfaces';
+import { useStore } from "../../../hooks/hooks";
 
-export default Register;
+const LoginForm = observer(() => {
+  const authStore = useStore('authStore')
 
-export const RegisterForm = () => {
   const { register, handleSubmit, errors } = useForm<User>();
   const onSubmit = (data: User) => {
-    axios.post('/api/auth/register', {
+    axios.post('api/auth/login', {
       email: data.email,
       password: data.password
     })
       .then((response) => {
-console.log(response);
-
+        authStore.setToken(response.data.token);
+        authStore.setIsAuth(true);
       })
   };
   return (
     <div>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="field">
           <label htmlFor="email">
@@ -42,7 +38,6 @@ console.log(response);
           {errors.email && errors.email.type === 'required' && (
             <div className="error">Your must enter your text.</div>
           )}
-
         </div>
         <div className="field">
           <label htmlFor="password">
@@ -65,9 +60,11 @@ console.log(response);
           type='submit'
           startIcon={<ExitToAppTwoToneIcon />}
         >
-          Register
+          Login
         </Button>
       </form>
     </div>
   );
-};
+});
+
+export default LoginForm;

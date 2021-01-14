@@ -1,24 +1,34 @@
 import React from 'react';
+import { observer} from "mobx-react-lite";
 import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
+import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
+import TestForm from './components/TestForm/TestForm'
+import MainScreen from './components/MainScreen/MainScreen';
 
-function App() {
-  return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-     <Route
-        path='/login'
-        component={Login}
-      />
-      <Route
-        path='/register'
-        component={Register}
-      />
+const App = observer(() => {
+    return (
+        <div className="container">
+            <BrowserRouter basename={process.env.PUBLIC_URL}>
+                <Header />
+                <Route
+                    path='/login'
+                    component={Login}
+                />
+                <Route
+                    path='/register'
+                    component={Register}
+                />
+                <Route
+                    path='/'
+                    component={MainScreen}
+                />
+                {/* <TestForm /> */}
+            </BrowserRouter>
+        </div>
+    );
+})
 
-    </BrowserRouter>
-  );
-
-}
-
-export default App;
+export default App
