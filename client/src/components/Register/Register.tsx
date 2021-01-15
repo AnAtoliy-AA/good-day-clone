@@ -1,6 +1,6 @@
 import React from 'react';
 import './Register.scss';
-import { Button } from '@material-ui/core'
+import { Button, TextField } from '@material-ui/core'
 import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
 import { useForm } from 'react-hook-form'
 import axios from 'axios';
@@ -22,41 +22,40 @@ export const RegisterForm = () => {
       password: data.password
     })
       .then((response) => {
-console.log(response);
+        console.log(response);
 
       })
   };
   return (
     <div>
-
+      Register
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="field">
-          <label htmlFor="email">
-            <input
-              type="text"
-              id="email"
-              name="email"
-              ref={register({ required: true })}
-            />
-          </label>
+          <TextField id="name"
+            size='small'
+            name="email"
+            error={errors.email && true}
+            autoComplete='false'
+            label="Write your email here"
+            variant="outlined"
+            inputRef={register({ required: true })} />
           {errors.email && errors.email.type === 'required' && (
-            <div className="error">Your must enter your text.</div>
+            <div className="error">Your must enter email!.</div>
           )}
-
         </div>
         <div className="field">
-          <label htmlFor="password">
-            <input
-              type="password"
-              id="password"
-              name="password"
-              ref={register({ required: true })}
-            />
-          </label>
+          <TextField id="password"
+            size='small'
+            name="password"
+            type="password"
+            error={errors.password && true}
+            autoComplete='false'
+            label="Write your password here"
+            variant="outlined"
+            inputRef={register({ required: true })} />
           {errors.password && errors.password.type === 'required' && (
-            <div className="error">Your must enter your text.</div>
+            <div className="error">Your must enter your password.</div>
           )}
-
         </div>
         <Button
           variant="contained"
