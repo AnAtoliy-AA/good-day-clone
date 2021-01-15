@@ -7,8 +7,15 @@ import NewTaskForm from '../NewTaskForm/NewTaskForm';
 import TestForm from '../TestForm/TestForm';
 import './MainScreen.scss';
 
+import isWeekend from 'date-fns/isWeekend';
+import TextField from '@material-ui/core/TextField';
+import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
+import LocalizaitonProvider from '@material-ui/lab/LocalizationProvider';
+import StaticDatePicker from '@material-ui/lab/StaticDatePicker';
+
 const MainScreen: React.FC = observer(() => {
   const mainScreenStore = useStore('mainScreenStore')
+  const [value, setValue] = React.useState(new Date());
   return (
     <div className="MainScreen">
       <Button
@@ -19,6 +26,18 @@ const MainScreen: React.FC = observer(() => {
       > New task </Button>
       {mainScreenStore.isNewTaskFormOpen && <NewTaskForm />}
       {!mainScreenStore.isNewTaskFormOpen && <TestForm />}
+      <LocalizaitonProvider dateAdapter={AdapterDateFns}>
+          <StaticDatePicker
+            orientation="landscape"
+            openTo="date"
+            value={value}
+            shouldDisableDate={isWeekend}
+            onChange={(newValue) => {
+              setValue(newValue);
+            }}
+            renderInput={(params) => <TextField {...params} variant="standard" />}
+          />
+      </LocalizaitonProvider>
     </div>
   )
 })
