@@ -25,15 +25,16 @@ export interface Task {
 }
 
 export interface TaskFields {
-  _id: string
+  _id?: string
+  taskId: string
   name: string
-  assigned: string
-  required: string
-  priority: string
-  deadline: string
-  status: string
-  estimate: string
-  startEnd: string
-  progress: number
+  assigned?: string
+  required?: string
+  priority?: string
+  deadline?: string
+  status?: string
+  estimate?: string
+  startEnd?: string
+  progress?: number
   schedule?: Date
 }
