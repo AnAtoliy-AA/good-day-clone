@@ -9,4 +9,9 @@ export class TasksStore {
     setTasks(tasks:Array<Task>) {
         this.tasks = tasks
     }
+
+    @action
+    updateTasks(tasks:Array<Task>) {
+        this.tasks = tasks
+    }
 }

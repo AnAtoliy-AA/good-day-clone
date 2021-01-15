@@ -7,15 +7,17 @@ import Task from '../Task/Task';
 
 const TestForm: React.FC = observer(() => {
   const tasksStore = useStore('tasksStore')
+  // const tasksArray =[...tasksStore.tasks] 
 
-  const [tasks, updateTasks] = useState();
+  // const [tasks, updateTasks] = useState(tasksArray);
   const handleOnDragEnd = (result: any) => {
-    // if (!result.destination) return;
-    // const items = Array.from(tasks);
-    // const [reorderedItem] = items.splice(result.source.index, 1);
-    // items.splice(result.destination.index, 0, reorderedItem);
+    if (!result.destination) return;
+    
+    const items = Array.from(tasksStore.tasks);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
 
-    // updateTasks(items);
+    tasksStore.updateTasks(items);
   }
 
   return (
