@@ -12,7 +12,7 @@ const TestForm: React.FC = observer(() => {
   // const [tasks, updateTasks] = useState(tasksArray);
   const handleOnDragEnd = (result: any) => {
     if (!result.destination) return;
-    
+    console.log('RESULT: ', result.destination.droppableId)
     const items = Array.from(tasksStore.tasks);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
@@ -50,13 +50,26 @@ const TestForm: React.FC = observer(() => {
           </ul>
           )}
         </Droppable>
+        <Droppable droppableId='SOME_DATE'>
+          {(provided) => (<div
+            {...provided.droppableProps}
+            ref={provided.innerRef}>SOME DAY</div>
+          )}
+        </Droppable>
+        <Droppable droppableId='ANOTHER_DATE'>
+          {(provided) => (<div
+            {...provided.droppableProps}
+            ref={provided.innerRef}>ANOTHER_DATE</div>
+          )}
+        </Droppable>
+        <Droppable droppableId='SOME_OTHER_DATE'>
+          {(provided) => (<div
+            {...provided.droppableProps}
+            ref={provided.innerRef}>SOME_OTHER_DATE</div>
+          )}
+        </Droppable>
       </DragDropContext>
-
-      <div>SOME_DATE</div>
-      <div>ANOTHER_DATE</div>
-      <div>SOME_OTHER_DATE</div>
     </div>
-
   )
 });
 
