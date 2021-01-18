@@ -8,7 +8,9 @@ import TestForm from '../TestForm/TestForm';
 import './MainScreen.scss';
 
 const MainScreen: React.FC = observer(() => {
+  const tasksStore = useStore('authStore')
   const mainScreenStore = useStore('mainScreenStore')
+
   return (
     <div className="MainScreen">
       <Button
@@ -17,8 +19,7 @@ const MainScreen: React.FC = observer(() => {
         startIcon={<AddCircleIcon />}
         onClick={() => { mainScreenStore.toggleIsNewTaskFormOpen() }}
       > New task </Button>
-      {mainScreenStore.isNewTaskFormOpen && <NewTaskForm />}
-      {!mainScreenStore.isNewTaskFormOpen && <TestForm />}
+      {mainScreenStore.isNewTaskFormOpen ? <NewTaskForm /> : <TestForm />}
     </div>
   )
 })

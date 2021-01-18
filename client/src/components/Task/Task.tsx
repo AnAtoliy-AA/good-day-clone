@@ -5,8 +5,9 @@ import './Task.scss';
 import axios from 'axios';
 import { useStore } from '../../hooks/hooks';
 import { TaskFields } from '../../shared/interfaces';
+import { observer } from 'mobx-react-lite';
 
-const Task = (props:TaskFields) => {
+const Task = observer((props:TaskFields) => {
   const authStore = useStore('authStore')
   const tasksStore = useStore('tasksStore')
 
@@ -36,6 +37,7 @@ const Task = (props:TaskFields) => {
       <div>
         <h3>{props.name}</h3>
         <h5>{props.priority}</h5>
+        <div>Deadline:{props.deadline}</div>
       </div>
       <Button
         variant="contained"
@@ -46,6 +48,6 @@ const Task = (props:TaskFields) => {
       </Button>
     </div>
   )
-};
+});
 
 export default Task;
