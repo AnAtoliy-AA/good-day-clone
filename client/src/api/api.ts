@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useStore } from '../hooks/hooks';
 
 //TODO
-const CreateApi = () => {
+export  const CreateApi = () => {
     const authStore = useStore('authStore')
 
     const instance = axios.create({
@@ -18,6 +18,7 @@ const CreateApi = () => {
 
 export const tasksAPI = {
     getTasks() {
+        console.log('GET TASKS: ', CreateApi())
         return CreateApi().get(`task`)
             .then(response => response.data);
     },

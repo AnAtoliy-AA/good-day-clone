@@ -1,3 +1,4 @@
+import { TaskFields } from './../shared/interfaces';
 import { action, observable } from "mobx";
 import { Task } from "../shared/interfaces";
 
@@ -13,5 +14,13 @@ export class TasksStore {
     @action
     updateTasks(tasks:Array<Task>) {
         this.tasks = tasks
+    }
+
+    @observable
+    activeTask: TaskFields | undefined 
+
+    @action
+    setActiveTask(task:TaskFields) {
+        this.activeTask = task
     }
 }

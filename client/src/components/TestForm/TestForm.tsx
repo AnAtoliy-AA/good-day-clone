@@ -1,33 +1,78 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useStore } from '../../hooks/hooks';
 import './TestForm.scss';
 import Task from '../Task/Task';
+import axios from 'axios';
 
-const TestForm: React.FC = observer(() => {
+const TestForm: React.FC = () => {
   const tasksStore = useStore('tasksStore')
-  // const tasksArray =[...tasksStore.tasks] 
+  const authStore = useStore('authStore')
 
-  // const [tasks, updateTasks] = useState(tasksArray);
+
+  const sendRequest = async () => {
+    axios.get('/api/task', {
+      headers: {
+        authorization: authStore.token
+      }
+    })
+      .then((response) => {
+        tasksStore.setTasks(response.data)
+      })
+  }
+
+  const updateTask = async (itemId: string, date: string) => {
+    axios.get(`/api/task/${itemId}`, {
+      headers: {
+        authorization: authStore.token
+      },
+    })
+      .then((response) => {
+        tasksStore.setActiveTask(response.data.list[0])
+        axios.patch(`api/task/${itemId}`, {
+          list: {
+            name: tasksStore.activeTask?.name,
+            priority: tasksStore.activeTask?.priority,
+            deadline: date
+          }
+        }, {
+          headers: {
+            authorization: authStore.token
+          },
+
+        })
+          .then((response) => {
+            sendRequest()
+            console.log('TASK RESPONSE: ', response.data)
+          })
+      })
+  }
+
   const handleOnDragEnd = (result: any) => {
     if (!result.destination) return;
-    console.log('RESULT: ', result.destination.droppableId)
-    const items = Array.from(tasksStore.tasks);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
+    updateTask(result.draggableId, result.destination.droppableId)
+  }
+  const addDays = () => {
+    const date = new Date();
+    let datesCollection = []
+  
+    for (let i = 1; i <=7; i++) {
+      const newDate = new Date(date.getTime() + i * 1000 * 60 * 60 * 24);
+      datesCollection.push(`${newDate.getDate()}/${newDate.getMonth() + 1}`);
+    }
 
-    tasksStore.updateTasks(items);
+    return datesCollection
   }
 
   return (
     <div className="TestForm">
-      <DragDropContext onDragEnd={handleOnDragEnd}>
+      <DragDropContext onDragEnd={handleOnDragEnd} onDragStart={() => console.log(EventTarget)}>
         <Droppable droppableId='inbox'>
           {(provided) => (<ul
             {...provided.droppableProps}
             ref={provided.innerRef}>Inbox
-            {(tasksStore.tasks.length) && tasksStore.tasks.map((el, index) => {
+            { tasksStore.tasks.filter(el => !el.list[0].deadline).map((el, index) => {
               return (
                 <Draggable key={el._id} draggableId={el._id} index={index}>
                   {(provided) => (
@@ -35,11 +80,11 @@ const TestForm: React.FC = observer(() => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       ref={provided.innerRef}>
-
                       <Task
+                        taskId={el._id}
                         name={el.list[0].name}
                         priority={el.list[0].priority}
-                        taskId={el._id}
+                        deadline={el.list[0].deadline}
                       />
                     </li>
                   )}
@@ -50,27 +95,40 @@ const TestForm: React.FC = observer(() => {
           </ul>
           )}
         </Droppable>
-        <Droppable droppableId='SOME_DATE'>
-          {(provided) => (<div
+        {addDays().map(day => {
+         return( <Droppable droppableId={day}>
+          {(provided) => (<ul
             {...provided.droppableProps}
-            ref={provided.innerRef}>SOME DAY</div>
+            ref={provided.innerRef}>{day}
+             {(tasksStore.tasks.length) && tasksStore.tasks.filter(el => el.list[0].deadline===day).map((el, index) => {
+              return (
+                <Draggable key={el._id} draggableId={el._id} index={index}>
+                  {(provided) => (
+                    <li
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      ref={provided.innerRef}>
+
+                      <Task
+                        taskId={el._id}
+                        name={el.list[0].name}
+                        priority={el.list[0].priority}
+                        deadline={el.list[0].deadline}
+                      />
+                    </li>
+                  )}
+                </Draggable>
+              )
+            })}
+            {provided.placeholder}
+          </ul>
           )}
         </Droppable>
-        <Droppable droppableId='ANOTHER_DATE'>
-          {(provided) => (<div
-            {...provided.droppableProps}
-            ref={provided.innerRef}>ANOTHER_DATE</div>
-          )}
-        </Droppable>
-        <Droppable droppableId='SOME_OTHER_DATE'>
-          {(provided) => (<div
-            {...provided.droppableProps}
-            ref={provided.innerRef}>SOME_OTHER_DATE</div>
-          )}
-        </Droppable>
+         )
+        })}
       </DragDropContext>
     </div>
   )
-});
+};
 
-export default TestForm;
+export default observer(TestForm);
