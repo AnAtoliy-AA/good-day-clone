@@ -12,35 +12,26 @@ const TestForm: React.FC = () => {
 
   //TODO
   let [tasks, updateTasks] = useState([...tasksStore.tasks]);
-  // const tasksArray =[...tasksStore.tasks] 
-
-  // const handleOnDragEnd = (result: any) => {
-  //   if (!result.destination) return;
-  //   updateTask(result.draggableId, result.destination.droppableId)
-  // }
 
   const handleOnDragEnd = (result: any) => {
     if (!result.destination) return;
 
     tasks = Array.from(tasksStore.tasks);
     //TODO
-    console.log('RESULT handleOnDragEnd: ', result)
-
     // const [reorderedItem] = tasks.splice(result.source.index, 1);
     // tasks.splice(result.destination.index, 0, reorderedItem);
 
     //TODO
-    //.list[0].deadline = 
-    const [reorderedItem] = tasks.splice(result.source.droppableId, 1);
-    console.log("🚀 ~ file: TestForm.tsx ~ line 31 ~ handleOnDragEnd ~ result.source.droppableId", result.destination.droppableId)
-    reorderedItem.list[0].deadline = result.destination.droppableId
-    console.log('REORDER', reorderedItem.list[0].deadline)
-    // tasks.push(reorderedItem)
-    tasks.splice(result.destination.droppableId, 0, reorderedItem);
+    const movedArr = tasks.map(el => {
+      if (el._id === result.draggableId) {
+        el.list[0].deadline = result.destination.droppableId
+      }
+      return el
+    });
 
     updateTask(result.draggableId, result.destination.droppableId)
-    tasksStore.updateTasks(tasks);
-    updateTasks(tasks)
+    tasksStore.updateTasks(movedArr);
+    updateTasks(movedArr)
   }
 
   const sendRequest = async () => {
@@ -75,7 +66,6 @@ const TestForm: React.FC = () => {
         })
           .then((response) => {
             sendRequest()
-            console.log('TASK RESPONSE: ', response.data)
           })
       })
   }
@@ -94,7 +84,7 @@ const TestForm: React.FC = () => {
 
   return (
     <div className="TestForm">
-      <DragDropContext onDragEnd={handleOnDragEnd} onDragStart={() => console.log(EventTarget)}>
+      <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId='inbox'>
           {(provided) => (<ul
             {...provided.droppableProps}

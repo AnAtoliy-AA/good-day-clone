@@ -40,7 +40,6 @@ const NewTaskForm = () => {
     })
       .then((response) => {
         sendRequest()
-        console.log('TASK RESPONSE: ', response.data)
         mainScreenStore.toggleIsNewTaskFormOpen()
       })
   };
