@@ -5,6 +5,10 @@ import { useStore } from '../../hooks/hooks';
 import './TestForm.scss';
 import Task from '../Task/Task';
 import axios from 'axios';
+import moment from 'moment';
+
+const M_SEC_IN_DAY = 1000 * 60 * 60 * 24
+const DAYS_IN_WEEK = 7
 
 const TestForm: React.FC = () => {
   const tasksStore = useStore('tasksStore')
@@ -71,12 +75,12 @@ const TestForm: React.FC = () => {
   }
 
   const addDays = () => {
-    const date = new Date();
+    const date = new Date()
     let datesCollection = []
 
-    for (let i = 0; i < 7; i++) {
-      const newDate = new Date(date.getTime() + i * 1000 * 60 * 60 * 24);
-      datesCollection.push(`${newDate.getDate()}/${newDate.getMonth() + 1}`);
+    for (let i = 0; i < DAYS_IN_WEEK; i++) {
+      const newDate = moment(new Date(date.getTime() + i * M_SEC_IN_DAY)).format('DD MMM yyyy')
+      datesCollection.push(newDate)
     }
 
     return datesCollection

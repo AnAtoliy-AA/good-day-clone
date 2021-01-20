@@ -1,12 +1,21 @@
 import React from 'react';
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
+
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core'
+import { MuiPickersUtilsProvider, KeyboardDatePicker, } from '@material-ui/pickers';
+import Grid from '@material-ui/core/Grid';
 import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
 
-import './NewTaskForm.scss';
+import DateFnsUtils from '@date-io/date-fns';
+import moment from 'moment';
+import 'date-fns';
+
 import { NewTask } from '../../shared/interfaces';
 import { useStore } from "../../hooks/hooks";
+import './NewTaskForm.scss';
+
+
 
 const NewTaskForm = () => {
   const authStore = useStore('authStore')
@@ -30,7 +39,8 @@ const NewTaskForm = () => {
     axios.post('api/task', {
       list: {
         name: data.name,
-        priority: priority
+        priority: priority,
+        deadline: moment(selectedDate).format('DD MMM yyyy')
       }
     }, {
       headers: {
@@ -48,6 +58,12 @@ const NewTaskForm = () => {
 
   const handleChange = (event: any) => {
     setPriority(event.target.value);
+  };
+
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+
+  const handleDateChange = (date: any) => {
+    setSelectedDate(date);
   };
 
   return (
@@ -90,7 +106,21 @@ const NewTaskForm = () => {
           </FormControl>
         </div>
         <div className="field">
-          Deadline
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid container justify="space-around">
+              <KeyboardDatePicker
+                margin="normal"
+                id="date-picker-dialog"
+                label="Choose deadline of you project"
+                format="dd MMM yyyy"
+                value={selectedDate}
+                onChange={handleDateChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            </Grid>
+          </MuiPickersUtilsProvider>
         </div>
         <div className="field">
           Progress
