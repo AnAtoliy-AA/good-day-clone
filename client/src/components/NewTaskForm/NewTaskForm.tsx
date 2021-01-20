@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
 
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core'
+import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField } from '@material-ui/core'
 import { MuiPickersUtilsProvider, KeyboardDatePicker, } from '@material-ui/pickers';
 import Grid from '@material-ui/core/Grid';
 import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
@@ -83,7 +83,7 @@ const NewTaskForm = () => {
           )}
         </div>
         <div className="field">
-          <FormControl variant="filled" className="priorityForm">
+          <FormControl variant="filled">
             <InputLabel id="demo-simple-select-filled-label">Priority</InputLabel>
             <Select
               labelId="demo-simple-select-filled-label"
@@ -92,9 +92,6 @@ const NewTaskForm = () => {
               value={priority}
               onChange={handleChange}
             >
-              <MenuItem value="">
-                <em>Normal</em>
-              </MenuItem>
               <MenuItem value={'Emergency'}>Emergency</MenuItem>
               <MenuItem value={'Blocker'}>Blocker</MenuItem>
               <MenuItem value={'Highest'}>Highest</MenuItem>
@@ -103,6 +100,7 @@ const NewTaskForm = () => {
               <MenuItem value={'Low'}>Low</MenuItem>
               <MenuItem value={'Lowest'}>Lowest</MenuItem>
             </Select>
+            <FormHelperText>Select task priority</FormHelperText>
           </FormControl>
         </div>
         <div className="field">
