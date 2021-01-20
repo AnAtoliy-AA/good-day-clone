@@ -8,10 +8,12 @@ const Header: React.FC = () => {
   const authStore = useStore('authStore')
   return (
     <div className="Header">
-      <div>GoodDayClone</div>
-      {authStore.isAuth 
-      ?  <Alert severity="success">You were authorized</Alert>
-      : <Alert severity="error">Please login or register!</Alert>}
+      <div>
+        <NavLink to="/main" ><img className='logo' src="logo_main.jpg" alt="PlanYourWork" /></NavLink>
+      </div>
+      {authStore.isAuth
+        ? <Alert severity="success">You were authorized</Alert>
+        : <Alert severity="error">Please login or register!</Alert>}
       {!authStore.isAuth ? <div>
         <NavLink to="/login" >Login</NavLink>
         <NavLink to="/register" >Register</NavLink>

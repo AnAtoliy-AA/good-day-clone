@@ -89,7 +89,7 @@ const TestForm: React.FC = () => {
   return (
     <div className="TestForm">
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId='inbox'>
+        {/* <Droppable droppableId='inbox'>
           {(provided) => (<ul
             {...provided.droppableProps}
             ref={provided.innerRef}>Inbox
@@ -115,7 +115,7 @@ const TestForm: React.FC = () => {
             {provided.placeholder}
           </ul>
           )}
-        </Droppable>
+        </Droppable> */}
         {addDays().map((day, index) => {
           return (<Droppable droppableId={day} key={index}>
             {(provided) => (<ul
